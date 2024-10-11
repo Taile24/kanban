@@ -37,7 +37,7 @@ const SignUp = () => {
                         }
                     ]
                 }>
-                    <Input allowClear maxLength={100} type='name'></Input>
+                    <Input placeholder='Enter your name' allowClear maxLength={100} type='name'></Input>
 
                 </Form.Item>
                 <Form.Item name={'email'} label='Email' rules={[
@@ -46,7 +46,7 @@ const SignUp = () => {
                         message: 'Please center you email !!!'
                     }
                 ]}>
-                    <Input allowClear maxLength={100} type='email'></Input>
+                    <Input allowClear placeholder='Enter your mail' maxLength={100} type='email'></Input>
 
                 </Form.Item>
                 <Form.Item name={'Password'} label='Password' rules={[
@@ -55,7 +55,7 @@ const SignUp = () => {
                         message: 'Please center you Password !!!'
                     }
                 ]}>
-                    <Input.Password maxLength={100} type='Password'></Input.Password>
+                    <Input.Password placeholder='Enter your password' maxLength={100} type='Password'></Input.Password>
 
                 </Form.Item>
 
@@ -82,8 +82,8 @@ const SignUp = () => {
             <SocialLogin />
             <div className='mt-3 text-center'>
                 <Space>
-                    <Text>Already have an account?</Text>
-                    <Link to={'/log-in'}>Log in</Link>
+                    <Text type='secondary'>Already have an account?</Text>
+                    <Link to={'/'}>Log in</Link>
                 </Space>
             </div>
 

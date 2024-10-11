@@ -17,9 +17,10 @@ const Login = () => {
 
 
     return (
-        <Card style={{ width: '70%', }}>
-            <div>
-                <Title level={2} className='text-center'>
+        <Card >
+            <div className='text-center'>
+                <img className='mb-3' src={"https://firebasestorage.googleapis.com/v0/b/kanban-d7ffd.appspot.com/o/Group%201122.png?alt=media&token=ee43e68d-9ff6-4545-a4a7-8abad2aaeef6"} alt="" style={{ width: 48, height: 48, }} />
+                <Title level={2} >
                     Log in to your account
                 </Title>
                 <Paragraph className='text-center' type='secondary'>
@@ -38,7 +39,7 @@ const Login = () => {
                         message: 'Please center you email !!!'
                     }
                 ]}>
-                    <Input allowClear maxLength={100} type='email'></Input>
+                    <Input allowClear placeholder='Enter your email' maxLength={100} type='email'></Input>
 
                 </Form.Item>
                 <Form.Item name={'Password'} label='Password' rules={[
@@ -47,7 +48,7 @@ const Login = () => {
                         message: 'Please center you Password !!!'
                     }
                 ]}>
-                    <Input.Password maxLength={100} type='Password'></Input.Password>
+                    <Input.Password placeholder='Enter your password' maxLength={100} type='Password'></Input.Password>
 
                 </Form.Item>
             </Form>
@@ -73,7 +74,7 @@ const Login = () => {
             <SocialLogin />
             <div className='mt-3 text-center'>
                 <Space>
-                    <Text>Don’t have an account?</Text>
+                    <Text type='secondary'>Don’t have an account?</Text>
                     <Link to={'/sign-up'}>Sign up</Link>
                 </Space>
             </div>

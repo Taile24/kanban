@@ -2,10 +2,22 @@ import React from 'react';
 import './App.css';
 import Routers from './routers/Routers';
 import { SignUp } from './screens';
+import { ConfigProvider } from 'antd';
 
 
 function App() {
-  return <Routers />;
+  return (
+    <ConfigProvider theme={{
+      token: {
+        colorTextHeading: '#1570EF',
+      },
+      components: {}
+    }}
+    >
+      <Routers />;
+    </ConfigProvider>
+  );
+
 
 }
 
