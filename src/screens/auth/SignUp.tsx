@@ -70,12 +70,13 @@ const SignUp = () => {
                     <Link to={'/'}>Forget password</Link >
                 </div>
             </div> */}
-            <div className='mt-4 mb-3' onClick={() => form.submit()}>
+            <div className='mt-5 mb-3' onClick={() => form.submit()}>
                 <Button type='primary' style={{
                     width: '100%',
 
                 }}
-                    size='large'>Get started
+                    size='large'>
+                    sign up
 
                 </Button>
             </div>
