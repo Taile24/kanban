@@ -1,16 +1,31 @@
-import { Button, Card, Checkbox, Form, Input, Space, Typography } from 'antd';
+import { Button, Card, Checkbox, Form, Input, message, Space, Typography } from 'antd';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import SocialLogin from './compunents/SocialLogin';
+import { error } from 'console';
+import handleAPI from '../../api/hadleApi';
 
 
 const { Title, Paragraph, Text } = Typography
 
 const SignUp = () => {
     const [isLoading, setisLoading] = useState(false);
+    const [Remember, setRemember] = useState(false);
     const [form] = Form.useForm();
-    const handleLogin = (valuse: { email: String, password: String }) => {
-        console.log(valuse)
+    const handleLogin = async (valuse: { email: String, password: String }) => {
+
+        const api = '/auth/rigister2';
+        setisLoading(true);
+        try {
+            const res = await handleAPI(api, valuse, 'post');
+            console.log(res);
+
+        } catch (error: any) {
+            message.error(error.message)
+            console.log(error);
+        } finally {
+            setisLoading(false);
+        }
     }
 
     return (
@@ -53,13 +68,28 @@ const SignUp = () => {
                     {
                         required: true,
                         message: 'Please center you Password !!!'
-                    }
+                    },
+                    () => ({
+                        validator: (_, value) => {
+                            if (value.length < 6) {
+                                return Promise.reject(
+                                    new Error(" Mật khẩu phải chứa ít nhất 6 ký tự")
+                                )
+                            } else {
+                                return Promise.resolve();
+                            }
+
+                        },
+                    })
+
+
+
                 ]}>
                     <Input.Password placeholder='Enter your password' maxLength={100} type='Password'></Input.Password>
 
                 </Form.Item>
 
-            </Form>
+            </Form >
 
 
             {/* <div className="row">
@@ -70,16 +100,19 @@ const SignUp = () => {
                     <Link to={'/'}>Forget password</Link >
                 </div>
             </div> */}
-            <div className='mt-5 mb-3' onClick={() => form.submit()}>
-                <Button type='primary' style={{
-                    width: '100%',
+            <div className='mt-5 mb-3' >
+                <Button
+                    loading={isLoading}
+                    onClick={() => form.submit()}
+                    type='primary' style={{
+                        width: '100%',
 
-                }}
+                    }}
                     size='large'>
                     sign up
 
                 </Button>
-            </div>
+            </div >
             <SocialLogin />
             <div className='mt-3 text-center'>
                 <Space>
