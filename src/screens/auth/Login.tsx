@@ -1,27 +1,35 @@
-import { Button, Card, Checkbox, Form, Input, Space, Typography } from 'antd'
+import { Button, Card, Checkbox, Form, Input, message, Space, Typography } from 'antd'
 
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import SocialLogin from './compunents/SocialLogin';
-import { wait } from '@testing-library/user-event/dist/utils';
 import handleAPI from '../../api/hadleApi';
-import { log } from 'console';
-
-
+import { useDispatch } from 'react-redux';
+import { localDataName } from '../../constants/appInfor';
+import { addAuth } from '../../firebase/redux/reducers/AuthReducer';
 
 const { Title, Paragraph, Text } = Typography
 const Login = () => {
     const [isLoading, setisLoading] = useState(false);
     const [isRemember, setisRemember] = useState(false)
     const [form] = Form.useForm();
-    const handleLogin = async (valuse: { email: String, password: String }) => {
-        console.log(valuse)
-        try {
-            const res = await handleAPI('/auth/rigister', valuse, 'post');
-            console.log(res)
+    const dispasth = useDispatch();
 
-        } catch (error) {
-            console.log(error)
+    const handleLogin = async (valuse: { email: String, password: String }) => {
+        setisLoading(true);
+        try {
+            const res: any = await handleAPI('/auth/Login', valuse, 'post');
+            res.data && dispasth(addAuth(res.data));
+            message.success(res.message);
+
+            if (isRemember) {
+                localStorage.setItem(localDataName.authData, JSON.stringify(res.data))
+            }
+        } catch (error: any) {
+            message.error(error.message)
+            console.log(error.message)
+        } finally {
+            setisLoading(false);
         }
     }
 
@@ -29,7 +37,7 @@ const Login = () => {
     return (
         <Card >
             <div className='text-center'>
-                <img className='mb-3' src={"https://firebasestorage.googleapis.com/v0/b/kanban-d7ffd.appspot.com/o/Group%201122.png?alt=media&token=ee43e68d-9ff6-4545-a4a7-8abad2aaeef6"} alt="" style={{ width: 48, height: 48, }} />
+                <img className='mb-3' src={"https://firebasestorage.googleapis.com/v0/b/kanban-d7ffd.appspot.com/o/Group%201122.png?alt=media&token=ee43e68d-9ff6-4545-a4a7-8abad2aaeef6"} alt="" style={{ width: 48, height: 48 }} />
                 <Title level={2} >
                     Log in to your account
                 </Title>
@@ -72,12 +80,14 @@ const Login = () => {
                     <Link to={'/'}>Forget password</Link >
                 </div>
             </div>
-            <div className='mt-4 mb-3' onClick={() => form.submit()}>
-                <Button type='primary' style={{
-                    width: '100%',
+            <div className='mt-4 mb-3'>
+                <Button
+                    onClick={() => form.submit()}
+                    type='primary' style={{
+                        width: '100%',
 
-                }}
-                    size='large'>Sign in
+                    }}
+                    size='large'>Login
 
                 </Button>
             </div>

@@ -1,28 +1,34 @@
-import { Button, Card, Checkbox, Form, Input, message, Space, Typography } from 'antd';
+import { Button, Card, Form, Input, message, Space, Typography } from 'antd';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import SocialLogin from './compunents/SocialLogin';
-import { error } from 'console';
+import { localDataName } from "../../constants/appInfor";
+
 import handleAPI from '../../api/hadleApi';
+import { useDispatch } from 'react-redux';
+import { addAuth } from '../../firebase/redux/reducers/AuthReducer';
 
 
 const { Title, Paragraph, Text } = Typography
 
-const SignUp = () => {
+const Register = () => {
     const [isLoading, setisLoading] = useState(false);
-    const [Remember, setRemember] = useState(false);
+    const dispatch = useDispatch();
     const [form] = Form.useForm();
     const handleLogin = async (valuse: { email: String, password: String }) => {
 
-        const api = '/auth/rigister2';
+        const api = '/auth/register';
         setisLoading(true);
         try {
-            const res = await handleAPI(api, valuse, 'post');
-            console.log(res);
+            const res: any = await handleAPI(api, valuse, 'post');
+            if (res.data) {
+                message.success(res.message);
+                dispatch(addAuth(res.data));
+            }
 
         } catch (error: any) {
             message.error(error.message)
-            console.log(error);
+
         } finally {
             setisLoading(false);
         }
@@ -126,4 +132,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default Register;

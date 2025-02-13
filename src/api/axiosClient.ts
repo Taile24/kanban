@@ -2,7 +2,7 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
-const baseURL = `http://192.168.1.5:3001`;
+const baseURL = `http://192.168.1.3:3001`;
 
 const axiosClient = axios.create({
     baseURL,
@@ -20,8 +20,8 @@ axiosClient.interceptors.request.use(async (config: any) => {
     return config;
 });
 
-axios.interceptors.response.use(
-    res => {
+axiosClient.interceptors.response.use(
+    (res) => {
         if (res.data && res.status >= 200 && res.status < 300) {
             return res.data;
         } else {

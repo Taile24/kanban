@@ -1,10 +1,9 @@
 import React from 'react'
+import HomeScreens from '../screens/HomeScreens'
 
 const MainRouters = () => {
   return (
-    <div>
-      2
-    </div>
+    <HomeScreens />
   )
 }
 
